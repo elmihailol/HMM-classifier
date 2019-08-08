@@ -1,17 +1,14 @@
 import operator
 from copy import copy
-
-from hmmlearn import hmm
 from scipy.special import softmax
 
 
-class GHMM_classifier():
-    def __init__(self, n_components=2, n_iter=10):
+class HMM_classifier():
+    def __init__(self, base_hmm_model):
         self.models = {}
-        self.n_components = n_components
-        self.hmm_model = hmm.GaussianHMM(n_components=self.n_components, n_iter=n_iter)
+        self.hmm_model = base_hmm_model
 
-    def fit(self, X, Y, verbose=False, n_iter=10):
+    def fit(self, X, Y):
         """
         X: input sequence [[[x1,x2,.., xn]...]]
         Y: output classes [1, 2, 1, ...]
@@ -72,3 +69,4 @@ class GHMM_classifier():
         pred = self.predict_proba(X)
 
         return max(pred.items(), key=operator.itemgetter(1))[0]
+    
